@@ -1,0 +1,12 @@
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-brand">{{ rootCtrl.brand }}</div>
+    <ul class="nav navbar-nav">
+        <li ng-repeat="navState in rootCtrl.navStates">
+            <a ui-sref="{{ navState.state }}">{{ navState.title }}</span></a>
+        </li>
+    </ul>
+</nav>
+
+<ui-view>
+
+</ui-view>

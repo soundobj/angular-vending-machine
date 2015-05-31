@@ -1,0 +1,51 @@
+<div class="container" ng-show="$state.is('root.service')">
+    <div class="row">
+        <h2>Service Vending Machine</h2>
+    </div>
+    <h3>Replenish Items</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <th>Add</th>
+            <th>Name</th>
+            <th>Amount</th>
+            </thead>
+            <tr ng-repeat="product in svCtrl.stock">
+                <td class="col-md-3">
+                    <span ng-repeat="measure in svCtrl.productMeasurements">
+                        <button class="btn btn-default btn-sm"
+                                ng-click="svCtrl.replenishProduct(product,measure)">
+                            + {{measure}}
+                        </button>
+                    </span>
+                </td>
+                <td>{{product.name}}</td>
+                <td>{{product.amount}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Add Change</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <th>Add</th>
+            <th>Denomination</th>
+            <th>Amount</th>
+            </thead>
+            <tr ng-repeat="denomination in svCtrl.denominations">
+                <td>
+                    <span ng-repeat="measure in svCtrl.denominationMeasurements">
+                        <button class="btn btn-default btn-sm"
+                                ng-click="svCtrl.replenishDenominations(denomination,measure)">
+                            + {{measure}}
+                        </button>
+                    </span>
+                </td>
+                <td>{{denomination.name}}</td>
+                <td>{{denomination.amount}}</td>
+
+            </tr>
+        </table>
+    </div>
+</div>

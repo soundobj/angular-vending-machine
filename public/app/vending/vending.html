@@ -1,0 +1,79 @@
+<div class="container" ng-show="$state.is('root.vending')">
+    <div class="row">
+        <h2>Stock</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <th>Action</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Price</th>
+            </thead>
+            <tr ng-repeat="product in vendingCtrl.stock">
+                <td class="col-md-1">
+                    <button class="btn btn-default btn-md"
+                            ng-click="vendingCtrl.purchase(product)">
+                        Purchase
+                    </button>
+                </td>
+                <td>{{product.name}}</td>
+                <td>{{product.amount}}</td>
+                <td>{{product.price}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row" ng-show="vendingCtrl.itemToPurchase">
+        <h2>Purchasing</h2>
+        <div>
+            <span>{{vendingCtrl.itemToPurchase.name}}</span><br />
+            <span>price: {{vendingCtrl.itemToPurchase.price}} pence</span>
+        </div>
+        <label>Amount paid:<input type="text" ng-model="vendingCtrl.customerEnteredMoney" disabled></label>
+        <label>Outstanding Balance:<input type="text" ng-model="vendingCtrl.outstandingBalance" disabled></label>
+
+        <div ng-show="vendingCtrl.allowPayments">
+            <h2>Pay</h2>
+            <span ng-repeat="denomination in vendingCtrl.denominations">
+                <button class="btn btn-default btn-md"
+                        ng-click="vendingCtrl.addFunds(denomination.value)">
+                    {{denomination.name}}
+                </button>
+            </span>
+            <span>
+                <button class="btn btn-default btn-md"
+                        ng-click="vendingCtrl.cancelPurchase()">
+                    Cancel purchase
+                </button>
+            </span>
+        </div>
+
+        <div ng-show="vendingCtrl.gatheredChange.success">
+            <h2>Collect</h2>
+            <div>
+                <span>Thanks for purchasing {{vendingCtrl.itemToPurchase.name}}</span>
+                <button ng-click="vendingCtrl.resetVendingMachine()">Collect Item</button>
+            </div>
+            <div ng-show="vendingCtrl.dispatchChange">
+                <div ng-repeat="(key,value) in vendingCtrl.gatheredChange.change">
+                    <span>coin: {{ vendingCtrl.funds.lookupDenomination(key) }}</span>
+                    <span>({{ value }})</span>
+                </div>
+                <div>Total Change : {{ vendingCtrl.gatheredChange.totalAmountDue }} pence</div>
+            </div>
+        </div>
+
+        <div ng-show="vendingCtrl.gatheredChange.failure">
+            <h2>Failure</h2>
+            <div>
+                <span>{{ vendingCtrl.gatheredChange.failure }}</span>
+                <div ng-repeat="(key,value) in vendingCtrl.customerEnteredCoins">
+                    <span>coin: {{ vendingCtrl.funds.lookupDenomination(key) }}</span>
+                    <span>({{ value }})</span>
+                </div>
+                <button ng-click="vendingCtrl.resetVendingMachine()">Collect Change</button>
+            </div>
+        </div>
+    </div>
+</div>
